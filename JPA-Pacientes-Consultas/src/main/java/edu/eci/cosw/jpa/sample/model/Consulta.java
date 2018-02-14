@@ -2,6 +2,7 @@ package edu.eci.cosw.jpa.sample.model;
 // Generated Mar 9, 2016 7:01:57 AM by Hibernate Tools 4.3.1
 
 
+
 import java.util.Date;
 
 /**
