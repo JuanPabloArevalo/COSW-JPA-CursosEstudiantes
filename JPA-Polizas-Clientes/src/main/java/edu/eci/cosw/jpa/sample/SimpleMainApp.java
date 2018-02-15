@@ -16,6 +16,12 @@
  */
 package edu.eci.cosw.jpa.sample;
 
+import edu.eci.cosw.jpa.sample.model.Cliente;
+import edu.eci.cosw.jpa.sample.model.ClienteId;
+import edu.eci.cosw.jpa.sample.model.PolizaAprobada;
+import edu.eci.cosw.jpa.sample.model.PolizaAprobadaId;
+import edu.eci.cosw.jpa.sample.model.TipoPoliza;
+import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,6 +39,24 @@ public class SimpleMainApp {
         SessionFactory sf=getSessionFactory();
         Session s=sf.openSession();
         Transaction tx=s.beginTransaction();
+        
+        // Creando cliente
+        ClienteId idCliente = new ClienteId(102077, "cc");
+        Cliente cliente = new Cliente(idCliente, "Juan Pablo Arevalo", "Calle 168", "313459");
+        
+        // Consultando poliza 1
+        TipoPoliza poliza = (TipoPoliza) s.load(TipoPoliza.class, 1);
+        System.out.println("Codigo: " + poliza.getCodigoPoliza());
+        System.out.println("Nombre: " + poliza.getNombre());
+        System.out.println("Descripcion: " + poliza.getDescripcion());
+        System.out.println("Monto maximo: " + poliza.getMontoMaximo());
+        
+        // Creando poliza aprobada para el cliente con la poliza 1
+        Date today = new Date();
+        PolizaAprobadaId aprobadaId = new PolizaAprobadaId(idCliente.getId(), idCliente.getTipoId(), poliza.getCodigoPoliza());
+        PolizaAprobada aprobada = new PolizaAprobada(aprobadaId, cliente, poliza, today, today);
+        
+        s.saveOrUpdate("POLIZAS_APROBADAS", aprobada);
         
         tx.commit();       
         s.close();
