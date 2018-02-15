@@ -14,9 +14,8 @@ import javax.persistence.GeneratedValue;
 @Embeddable
 public class PacienteId  implements java.io.Serializable {
 
-
-     private int id;
-     private String tipoId;
+    private int id;
+    private String tipoId;
 
     public PacienteId() {
     }
@@ -25,6 +24,7 @@ public class PacienteId  implements java.io.Serializable {
        this.id = id;
        this.tipoId = tipoId;
     }
+    
     
     @GeneratedValue
     @Column(name = "id", nullable = false)

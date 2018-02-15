@@ -42,22 +42,21 @@ public class SimpleMainApp {
 
         // Consultando paciente
         PacienteId id1 = new PacienteId(1, "cc");
-        Paciente query1 = (Paciente) s.load(Paciente.class, id1);
-        System.out.println("ID: " + query1.getId().getId());
-        System.out.println("Tipo ID: " + query1.getId().getTipoId());
-        System.out.println("Nombre: " + query1.getNombre());
-        System.out.println("Fecha Nacimiento: " + query1.getFechaNacimiento());
-        Set<Consulta> consultas = query1.getConsultas();
+        Paciente paciente = (Paciente) s.load(Paciente.class, id1);
+        System.out.println("ID: " + paciente.getId());
+        System.out.println("Tipo ID: " + paciente.getId());
+        System.out.println("Nombre: " + paciente.getNombre());
+        System.out.println("Fecha Nacimiento: " + paciente.getFechaNacimiento());
+        Set<Consulta> consultas = paciente.getConsultas();
         Iterator<Consulta> it = consultas.iterator();
         while (it.hasNext()) {
             System.out.println("Resumen: "+it.next().getResumen());
-            
         }
         // Adicionando consulta al paciente consultado
         Date today = new Date();
-        Consulta consulta1 = new Consulta(today,query1.getNombre());
-        query1.getConsultas().add(consulta1);
-        s.saveOrUpdate("PACIENTES", query1);
+        Consulta consulta1 = new Consulta(today,paciente.getNombre());
+        paciente.getConsultas().add(consulta1);
+        s.saveOrUpdate("PACIENTES", paciente);
 
         tx.commit();
         s.close();
